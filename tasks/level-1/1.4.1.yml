@@ -1,0 +1,37 @@
+# Standards: 0.11
+---
+
+# 1.4.1 Ensure AIDE is installed
+
+- name: 1.4.1 - Ensure AIDE is installed
+  package:
+    name: aide
+    state: present
+  tags:
+    - level-1
+    - section-1
+    - "1.4.1"
+    - scored
+
+- name: 1.4.1 - Check that aide database exists
+  stat:
+    path: "{{ cis_aide_database_filename }}"
+  register: aide_1.4.1
+  tags:
+    - level-1
+    - section-1
+    - "1.4.1"
+    - scored
+
+# We expect that 'aide --init' has been run and the generated database has been moved
+- name: 1.4.1 - Ensure aide database exists
+  command: "{{ item }}"
+  when: aide_1.4.1.stat.exists is not defined or not aide_1.4.1.stat.exists
+  with_items:
+    - "aide --init"
+    - "mv {{ cis_aide_src_database_filename }} {{ cis_aide_database_filename }}"
+  tags:
+    - level-1
+    - section-1
+    - "1.4.1"
+    - scored

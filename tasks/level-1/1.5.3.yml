@@ -1,0 +1,46 @@
+# Standards: 0.11
+---
+
+# 1.5.3 - Ensure authentication is required for single user mode
+
+- name: 1.5.3 - Ensure authentication is required for single user mode
+  stat:
+    path: /usrlib/systemd/system/rescue.service
+    register: rescue
+  tags:
+    - level-1
+    - "1.5.3"
+    - scored
+
+- name: 1.5.3 - Ensure authentication is required for single user mode
+  lineinfile:
+    path: /usrlib/systemd/system/rescue.service
+    state: present
+    regexp: 'ExecStart=-/usr/lib/systemd/systemd-sulogin-shell rescue'
+    line: 'ExecStart=-/usr/lib/systemd/systemd-sulogin-shell rescue'
+    when: rescue.stat.exists  
+  tags:
+    - level-1
+    - "1.5.3"
+    - scored
+
+- name: 1.5.3 - Ensure authentication is required for single user mode
+  stat:
+    path: /usrlib/systemd/system/emergency.service
+    register: emergency
+  tags:
+    - level-1
+    - "1.5.3"
+    - scored
+
+- name: 1.5.3 - Ensure authentication is required for single user mode
+  lineinfile:
+    path: /usrlib/systemd/system/rescue.service
+    state: present
+    regexp: 'ExecStart=-/usr/lib/systemd/systemd-sulogin-shell emergency'
+    line: 'ExecStart=-/usr/lib/systemd/systemd-sulogin-shell emergency'
+    when: emergency.stat.exists  
+  tags:
+    - level-1
+    - "1.5.3"
+    - scored

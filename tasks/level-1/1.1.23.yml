@@ -1,0 +1,37 @@
+---
+# Standards: 0.11
+
+# 1.1.23 - Disable USB Storage (Automated)
+
+- name: 1.1.23 - Check if CIS modprobe configuration file exists
+  stat:
+    path: "/etcmodprobe.d/usb_storage.conf""
+  register: modprobe_1.1.23
+  tags:
+    - level-1
+    - section-1
+    - "1.1.23"
+    - scored
+
+- name: 1.1.23 - Ensure mounting of usb-storage filesystems is disabled
+  copy:
+    dest: "/etcmodprobe.d/usb_storage.conf"
+    content: "install usb-storage /bin/true\n"
+  when: modprobe_1.1.23.stat.exists is not defined or not modprobe_1.1.23.stat.exists
+  tags:
+    - level-1
+    - section-1
+    - "1.1.23"
+    - scored
+
+- name: 1.1.23 - Ensure mounting of usb-storage filesystems is disabled
+  lineinfile:
+    dest: "/etcmodprobe.d/usb_storage.conf"
+    regexp: "^install usb-storage"
+    line: "install usb-storage /bin/true"
+  when: modprobe_1.1.23.stat.exists is defined and modprobe_1.1.23.stat.exists
+  tags:
+    - level-1
+    - section-1
+    - "1.1.23"
+    - scored

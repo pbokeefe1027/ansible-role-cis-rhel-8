@@ -1,5 +1,5 @@
 # ansible-role-cis-amazon-linux-2
-## Continued from https://github.com/anthcourtney/ansible-role-cis-amazon-linux but for Amazon Linux 2
+## Continued from https://github.com/anthcourtney/ansible-role-cis-amazon-linux but for RedHat Enterprise Linux v8.x
 
 Development
 -------------

@@ -35,3 +35,5 @@
   when: "'1.4.2' not in cis_level_1_exclusions"
 - include: "level-1/1.5.3.yml"
   when: "'1.5.3' not in cis_level_1_exclusions"
+- include: "level-1/1.9.yml"
+  when: "'1.9' not in cis_level_1_exclusions"
